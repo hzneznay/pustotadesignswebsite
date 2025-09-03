@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Об Pustota Designs</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Impact', Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      background-color: #1f1f1f;
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      transform: translateX(100%);
+      opacity: 0;
+      transition: transform 0.6s ease, opacity 0.6s ease;
+      line-height: 1.6;
+      padding: 100px 0;
+    }
+
+    body.page-in { transform: translateX(0); opacity: 1; }
+    body.page-out { transform: translateX(-100%); opacity: 0; }
+
+    .gradients-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .gradient-drop {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.8;
+      transition: transform 0.2s ease-out;
+      will-change: transform;
+    }
+
+    #drop1 { width:500px; height:500px; background:radial-gradient(circle, rgba(240,193,40,0.9) 0%, rgba(120,109,10,0.5) 70%, transparent 90%); top:5%; left:5%; }
+    #drop2 { width:450px; height:450px; background:radial-gradient(circle, rgba(0,255,255,0.8) 0%, rgba(20,140,104,0.4) 70%, transparent 90%); top:70%; left:6%; }
+    #drop3 { width:400px; height:400px; background:radial-gradient(circle, rgba(255,0,119,0.7) 0%, rgba(120,30,68,0.4) 70%, transparent 90%); top:50%; left:55%; }
+
+    .content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px 20px;
+      text-align: left;
+      font-size: 18px;
+      background: rgba(31,31,31,0.8);
+      border-radius: 15px;
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .content p { margin-bottom: 20px; }
+
+    .btn-home {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 25px;
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 400;
+      font-size: 16px;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-home:hover {
+      background-color: rgba(255,255,255,0.1);
+      box-shadow: 0 0 8px rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      background: rgba(31,31,31,0.8);
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255,255,255,0.1);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width:768px) {
+      #drop1, #drop2, #drop3 { width:300px; height:300px; }
+      .content { margin: 60px 15px; font-size: 16px; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="gradients-container">
+    <div class="gradient-drop" id="drop1"></div>
+    <div class="gradient-drop" id="drop2"></div>
+    <div class="gradient-drop" id="drop3"></div>
+  </div>
+
+  <div class="content">
+    <p>Я — Pustota Designs. Я создаю креативы, баннеры, постеры и дизайн для соцсетей. Работаю в Figma и превращаю идеи в визуал, который цепляет. Для меня дизайн — это не просто картинка, а инструмент, который работает: привлекает внимание, вызывает эмоции и оставляет след.</p>
+    <p>Я умею делать всё от простых баннеров до уникальных креативных проектов. У меня нет шаблонного подхода — каждый проект я собираю под задачу, чтобы результат выглядел стильно, современно и продуманно.</p>
+    <p>Pustota Designs — это про простоту, силу и креатив. Если тебе нужен дизайн, который будет выделяться, то я делаю именно это.</p>
+    <a href="pustatafinal.html" class="btn-home">Вернуться на главную</a>
+  </div>
+
+  <div class="footer">
+    © 2025 PUSTOTA DESIGN. website created by @bedolaga0007.
+  </div>
+
+  <script>
+    window.addEventListener("load", () => document.body.classList.add("page-in"));
+
+    const drops = [
+      document.getElementById('drop1'),
+      document.getElementById('drop2'),
+      document.getElementById('drop3')
+    ];
+    const sensitivity = [0.03,0.05,0.04];
+
+    document.addEventListener('mousemove',(e)=>{
+      const mouseX=e.clientX;
+      const mouseY=e.clientY;
+      drops.forEach((drop,i)=>{
+        const rect=drop.getBoundingClientRect();
+        const dropCenterX=rect.left+rect.width/2;
+        const dropCenterY=rect.top+rect.height/2;
+        const moveX=-(mouseX-dropCenterX)*sensitivity[i];
+        const moveY=-(mouseY-dropCenterY)*sensitivity[i];
+        drop.style.transform=`translate(${moveX}px, ${moveY}px)`;
+      });
+    });
+
+    function pulsate(){
+      drops[0].style.opacity=0.7+0.1*Math.sin(Date.now()/1200);
+      drops[1].style.opacity=0.75+0.1*Math.sin(Date.now()/1500);
+      drops[2].style.opacity=0.65+0.1*Math.sin(Date.now()/1800);
+      requestAnimationFrame(pulsate);
+    }
+    pulsate();
+  </script>
+</body>
+</html>
